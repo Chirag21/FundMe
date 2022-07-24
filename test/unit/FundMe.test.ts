@@ -11,17 +11,18 @@ import { FundMe, MockV3Aggregator } from "../../typechain-types/";
 
 !developmentChains.includes(network.name)
     ? describe.skip
-    : describe("FundMe", async () => {
+    : describe("FundMe", () => {
           let fundMe: FundMe;
           let deployer: SignerWithAddress;
           let mockV3Aggregator: MockV3Aggregator;
           const sendValue: BigNumber = ethers.utils.parseEther("1"); // 1ETH or 1e18 wei
-          const accounts = await ethers.getSigners();
+          let accounts: SignerWithAddress[];
 
           beforeEach(async () => {
               if (!developmentChains.includes(network.name)) {
                   throw "You need to be on a development chain to run tests";
               }
+              accounts = await ethers.getSigners();
               deployer = accounts[0];
               await deployments.fixture(["all"]);
               fundMe = await ethers.getContract("FundMe");
@@ -59,7 +60,7 @@ import { FundMe, MockV3Aggregator } from "../../typechain-types/";
               });
           });
 
-          describe("Withdraw", async () => {
+          describe("Withdraw", () => {
               beforeEach(async () => {
                   await fundMe.fund({ value: sendValue });
               });
@@ -152,7 +153,7 @@ import { FundMe, MockV3Aggregator } from "../../typechain-types/";
               });
           });
 
-          describe("Cheaper withdraw multiple funders", async () => {
+          describe("Cheaper withdraw multiple funders", () => {
               beforeEach(async () => {
                   await fundMe.fund({ value: sendValue });
               });

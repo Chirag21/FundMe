@@ -6,7 +6,7 @@ import { providers } from "ethers";
 
 developmentChains.includes(network.name)
     ? describe.skip
-    : describe("FundMe", async () => {
+    : describe("FundMe", () => {
           let fundMe: FundMe;
           let deployer: string;
           const sendValue = ethers.utils.parseEther("1");
